@@ -581,7 +581,8 @@
             "name": "createDevopsPipeline",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid2'))]"
+                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid2'))]",
+                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/runbooks/ServicePrincipalRunbook')]"
             ],
             "kind": "AzureCLI",
             "identity": {
