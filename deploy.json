@@ -153,7 +153,7 @@
         "AdminPasswordSecret": "adminPassword",
         "existingDomainUsername": "[first(split(parameters('DomainJoinAccountUPN'), '@'))]",
         "existingDomainName": "[split(parameters('DomainJoinAccountUPN'), '@')[1]]",
-        "identityName": "WVDServicePrincipal",
+        "identityName": "[concat('WVDServicePrincipal',skip(parameters('utcValue'), 9))]",
         "location": "[resourcegroup().location]",
         "rgName": "[resourcegroup().name]",
         "keyvaultName": "[concat('keyvault', parameters('utcValue'))]",
