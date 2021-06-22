@@ -38,7 +38,17 @@ $computerName = Get-AutomationVariable -Name 'computerName'
 $targetGroup = Get-AutomationVariable -Name 'targetGroup'
 $AutomationAccountName = Get-AutomationVariable -Name 'AccountName'
 $identityApproach = Get-AutomationVariable -Name 'identityApproach'
-$notificationEmail = Get-AutomationVariable -Name 'notificationEmail'
+$HostpoolName = Get-AutomationVariable -Name 'HostpoolName'
+$HostpoolType = Get-AutomationVariable -Name 'HostpoolType'
+$LoadBalancerType = Get-AutomationVariable -Name 'LoadBalancerType'
+$sessionHostSKU = Get-AutomationVariable -Name 'sessionHostSKU'
+$RemoteAppGroupName = Get-AutomationVariable -Name 'RemoteAppGroupName'
+$DesktopAppGroupName = Get-AutomationVariable -Name 'DesktopAppGroupName'
+$AVDWorkspaceName = Get-AutomationVariable -Name 'AVDWorkspaceName'
+$AVDWorkspaceFriendlyName = Get-AutomationVariable -Name 'AVDWorkspaceFriendlyName'
+$numberofSH = Get-AutomationVariable -Name 'numberofSH'
+
+
 
 # Download files required for this script from github ARMRunbookScripts/static folder
 $FileNames = "msft-wvd-saas-api.zip,msft-wvd-saas-web.zip,AzureModules.zip"
@@ -331,8 +341,8 @@ $parameters = $parameters.Replace("[LoadBalancerType]", $LoadBalancerType)
 $parameters = $parameters.Replace("[sessionHostSKU]", $sessionHostSKU)
 $parameters = $parameters.Replace("[RemoteAppGroupName]", $RemoteAppGroupName)
 $parameters = $parameters.Replace("[DesktopAppGroupName]", $DesktopAppGroupName)
-$parameters = $parameters.Replace("[targetGroup]", $targetGroup)
-$parameters = $parameters.Replace("[principalIds]", $principalIds)
+#$parameters = $parameters.Replace("[targetGroup]", $targetGroup)
+#$parameters = $parameters.Replace("[principalIds]", $principalIds)
 $parameters = $parameters.Replace("[AVDWorkspaceName]", $AVDWorkspaceName)
 $parameters = $parameters.Replace("[AVDWorkspaceFriendlyName]", $AVDWorkspaceFriendlyName)
 $parameters = $parameters.Replace("[numberofSH]", $numberofSH)
