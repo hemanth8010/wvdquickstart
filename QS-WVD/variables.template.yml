@@ -77,7 +77,7 @@ variables:
   value: "latest"
 
 - name: HostPoolName
-  value: "[HostpoolName]"
+  value: "[hostpoolName]"
   
 - name: profilesStorageAccountName
   value: "[profilesStorageAccountName]"

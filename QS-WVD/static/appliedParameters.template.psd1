@@ -33,7 +33,7 @@
     loadBalancerType                      = "[LoadBalancerType]"                # Load-balancing algorithm
     vmNamePrefix                          = "vmcreative"                        # Prefix for the WVD VMs that will be deployed
     vmSize                                = "[sessionHostSKU]"                  # The VM SKU
-    vmNumberOfInstances                   = [numberofSH]                        # Number of VMs to be deployed
+    vmNumberOfInstances                   = "[numberofSH]"                        # Number of VMs to be deployed
     vmInitialNumber                       = 1                                   # default
     diskSizeGB                            = 128                                 # Size of the VMs' disk
     vmDiskType                            = "Premium_LRS"                       # SKU of the above disk
