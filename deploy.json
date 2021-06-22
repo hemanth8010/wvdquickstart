@@ -20,6 +20,12 @@
                 "description": "The resource group containing the existing virtual network."
             }
         },
+        "dcRG": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group containing the existing domain controller."
+            }
+        },
         "domainControllerVMName": {
             "type": "string",
             "metadata": {
@@ -259,6 +265,10 @@
             {
                 "name": "computerName",
                 "value": "[concat('\"',parameters('domainControllerVMName'),'\"')]"
+            },
+             {
+                "name": "dcRG",
+                "value": "[concat('\"',parameters('dcRG'),'\"')]"
             },
             {
                 "name": "existingVnetName",
@@ -598,7 +608,7 @@
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))]",
                 "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
             ],
-            "resourceGroup": "[parameters('virtualNetworkResourceGroupName')]",
+            "resourceGroup": "[parameters('dcRG')]",
             "subscriptionId": "[subscription().subscriptionId]",
             "condition": "[equals(parameters('identityApproach'), 'AD')]",
             "properties": {

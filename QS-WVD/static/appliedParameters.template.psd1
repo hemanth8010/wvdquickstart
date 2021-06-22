@@ -43,6 +43,7 @@
     computerName                          = "[computerName]"                    # The name of the VM with the domain controller on it. Required only when using AD Identity Approach.
     vnetName                              = "[existingVnetName]"                # Name of the virtual network with the domain controller
     vnetResourceGroupName                 = "[virtualNetworkResourceGroupName]" # Name of the resource group with the domain controller VM and VNET in it
+    dcResourceGroupName                   = "[dcRG]"                            # Name of the resource group with the domain controller VM and VNET in it
     subnetName                            = "[existingSubnetName]"              # Name of the subnet for the VMs to join
     enablePersistentDesktop               = $false                              # WVD setting
     ######################

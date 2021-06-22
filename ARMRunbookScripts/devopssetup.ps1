@@ -32,6 +32,7 @@ $ObjectId = Get-AutomationVariable -Name 'ObjectId'
 $DomainJoinAccountUPN = Get-AutomationVariable -Name 'DomainJoinAccountUPN'
 $existingSubnetName = Get-AutomationVariable -Name 'existingSubnetName'
 $virtualNetworkResourceGroupName = Get-AutomationVariable -Name 'virtualNetworkResourceGroupName'
+$dcRG = Get-AutomationVariable -Name 'dcRG'
 $existingVnetName = Get-AutomationVariable -Name 'existingVnetName'
 $computerName = Get-AutomationVariable -Name 'computerName'
 $targetGroup = Get-AutomationVariable -Name 'targetGroup'
@@ -255,10 +256,10 @@ Write-Output "Found user group $targetGroup with principal Id $principalIds"
 
 # Removing the Custom Script Extension from domain controller VM. When re-running deployment, this means it will re-run the CSE, which can be used to create additional users for example
 if ($identityApproach -eq "AD") {
-	$VMCustomScriptExtension = Get-AzVMCustomScriptExtension -ResourceGroupName $virtualNetworkResourceGroupName -VMName $computerName -Name "userCreation"
+	$VMCustomScriptExtension = Get-AzVMCustomScriptExtension -ResourceGroupName $dcRG -VMName $computerName -Name "userCreation"
 	if ($VMCustomScriptExtension -ne $null) {
 	  Write-Output "In case AD is used, removing the userCreation CSE from domain controller VM..."
-	  Remove-AzVMCustomScriptExtension -ResourceGroupName $virtualNetworkResourceGroupName -VMName $computerName -Name "userCreation" -Force
+	  Remove-AzVMCustomScriptExtension -ResourceGroupName $dcRG -VMName $computerName -Name "userCreation" -Force
 	  Write-Output "userCreation CSE removed."
 	}
 }
@@ -307,6 +308,7 @@ $parameters = $parameters.Replace("[existingSubnetName]", $existingSubnetName)
 $parameters = $parameters.Replace("[virtualNetworkResourceGroupName]", $virtualNetworkResourceGroupName)
 $parameters = $parameters.Replace("[existingVnetName]", $existingVnetName)
 $parameters = $parameters.Replace("[computerName]", $computerName)
+$parameters = $parameters.Replace("[dcRG]", $dcRG)
 $parameters = $parameters.Replace("[existingDomainUsername]", $domainUsername)
 $parameters = $parameters.Replace("[existingDomainName]", $domainName)
 $parameters = $parameters.Replace("[DomainJoinAccountUPN]", $DomainJoinAccountUPN)
