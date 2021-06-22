@@ -121,6 +121,12 @@
                 "Azure AD DS"
             ]
         },
+        "targetGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the security Group to use for assigning access."
+            }
+        },
         "optionalNotificationEmail": {
             "type": "string",
             "metadata": {
@@ -154,7 +160,6 @@
         "jobGuid2": "[guid(toLower(uniquestring(variables('identityName'), subscription().id, parameters('utcValue'),'devOpsSetup')))]",
         "devOpsName": "[concat('WVDQuickStartOrg', skip(parameters('utcValue'), 9))]",   
         "devOpsProjectName": "[concat('WVDQuickStartProj', skip(parameters('utcValue'), 9))]",
-        "targetGroup": "WVDTestUsers",
         "hpName": "[concat('hp',parameters('organizationNameCode'),parameters('departmentCode'))]",
         "remoteAppGroup": "[concat('rag',variables('hpName'))]",
         "desktopAppGroup": "[concat('dag',variables('hpName'))]",
@@ -269,7 +274,7 @@
             },
             {
                 "name": "targetGroup",
-                "value": "[concat('\"', variables('targetGroup'),'\"')]"
+                "value": "[concat('\"', parameters('targetGroup'),'\"')]"
             },
             {
                 "name": "identityApproach",
