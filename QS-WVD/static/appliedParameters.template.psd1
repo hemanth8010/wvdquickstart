@@ -27,13 +27,13 @@
 
     # Host pool related #
     # ================== #
-    hostpoolName                          = "QS-WVD-HP"                         # Name of the WVD host pool
-    hostpoolType                          = "Pooled"                            # Type of host pool, can be "Personal" or "Pooled" (default)
+    hostpoolName                          = "[HostpoolName]"                    # Name of the WVD host pool
+    hostpoolType                          = "[HostpoolType]"                    # Type of host pool, can be "Personal" or "Pooled" (default)
     maxSessionLimit                       = 16                                  # default
-    loadBalancerType                      = "BreadthFirst"                      # Load-balancing algorithm
-    vmNamePrefix                          = "QS-WVD-VM"                         # Prefix for the WVD VMs that will be deployed
-    vmSize                                = "Standard_D2s_v3"                   # The VM SKU
-    vmNumberOfInstances                   = 2                                   # Number of VMs to be deployed
+    loadBalancerType                      = "[LoadBalancerType]"                # Load-balancing algorithm
+    vmNamePrefix                          = "vmcreative"                        # Prefix for the WVD VMs that will be deployed
+    vmSize                                = "[sessionHostSKU]"                  # The VM SKU
+    vmNumberOfInstances                   = [numberofSH]                        # Number of VMs to be deployed
     vmInitialNumber                       = 1                                   # default
     diskSizeGB                            = 128                                 # Size of the VMs' disk
     vmDiskType                            = "Premium_LRS"                       # SKU of the above disk
@@ -49,12 +49,12 @@
 
     # App group related #
     # ================== #
-    appGroupName                          = "QS-WVD-RAG"                        # Remote app group name
-    DesktopAppGroupName                   = "QS-WVD-DAG"                        # Desktop app group name
+    appGroupName                          = "[RemoteAppGroupName]"              # Remote app group name
+    DesktopAppGroupName                   = "[DesktopAppGroupName]"             # Desktop app group name
     targetGroup                           = "[targetGroup]"                     # Name of the user group to be assigned to the WVD environment. Only change to an existing group as group is created only in the initial ARM deployment.
     principalIds                          = "[principalIds]"                    # principal ID of the above test user group
-    workSpaceName                         = "QS-WVD-WS"                         # Name of the WVD workspace
-    workspaceFriendlyName                 = "WVD Workspace"                     # User-facing friendly name of the above workspace
+    workSpaceName                         = "[AVDWorkspaceName]"                # Name of the WVD workspace
+    workspaceFriendlyName                 = "[AVDWorkspaceFriendlyName]"        # User-facing friendly name of the above workspace
     ######################
 
     # Imaging related #
@@ -68,7 +68,7 @@
     osType                                = "Windows"                           # default
     publisher                             = "microsoftwindowsdesktop"           # default
     offer                                 = "office-365"                        # This image includes Office 365
-    sku                                   = "20h1-evd-o365pp"                   # Points to Windows 10 Enterprise Multi-Session, build 2004
+    sku                                   = "20h2-evd-o365pp"                   # Points to Windows 10 Enterprise Multi-Session, build 2004
     imageVersion                          = "latest"                            # default
     ######################
 

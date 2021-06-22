@@ -27,6 +27,34 @@
             },
             "defaultValue": ""
         },
+        "organizationNameCode": {
+            "type": "string",
+            "metadata": {
+                "description": "The Short code for your organization. For Example, MS for Microsoft or INV for Inviso"
+            },
+            "defaultValue": ""
+        },
+        "departmentCode": {
+            "type": "string",
+            "metadata": {
+                "description": "The Short code for your department. For Example, AIS, BI, MSG etc."
+            },
+            "defaultValue": ""
+        },
+        "avdWS": {
+            "type": "string",
+            "metadata": {
+                "description": "Workspace Name for AVD"
+            },
+            "defaultValue": ""
+        },
+        "avdWSFN": {
+            "type": "string",
+            "metadata": {
+                "description": "User Friendly Workspace Name for AVD"
+            },
+            "defaultValue": ""
+        },
         "azureAdminUpn": {
             "type": "string",
             "metadata": {
@@ -44,6 +72,38 @@
             "metadata": {
                 "description": "User or service account UPN (<username>@<domain-to-join>.com) with sufficient privileges to domain join virtual machines. Additionally, please make sure the username is allowed (aka.ms/usernames) - Certain common usernames such as 'admin' are not allowed for this account. The template will fail if you enter a user account that requires MFA or an application that is secured by a certificate."
             }
+        },
+        "vmSKU": {
+            "type": "string",
+            "metadata": {
+                "description": "Enter the required SKU from here.. https://docs.microsoft.com/en-us/azure/virtual-machines/sizes"
+            }
+        },
+        "numberOfSH": {
+            "type": "int",
+            "metadata": {
+                "description": "Enter the required number of session hosts"
+            }
+        },
+        "hostpoolType": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the type of hostpool. Pooled or Personal"
+            },
+            "allowedValues": [
+                "pooled",
+                "personal"
+            ]
+        },
+        "loadBalance": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the load balanced type of hostpool. BreadthFirst or DepthFirst"
+            },
+            "allowedValues": [
+                "BreadthFirst",
+                "DepthFirst"
+            ]
         },
         "DomainJoinAccountPassword": {
             "type": "securestring",
@@ -77,7 +137,7 @@
         }
     },
     "variables": {
-        "_artifactsLocation": "https://raw.githubusercontent.com/stgeorgi/wvdquickstart/master",
+        "_artifactsLocation": "https://raw.githubusercontent.com/hemanth8010/wvdquickstart/master",
         "AdminPasswordSecret": "adminPassword",
         "existingDomainUsername": "[first(split(parameters('DomainJoinAccountUPN'), '@'))]",
         "existingDomainName": "[split(parameters('DomainJoinAccountUPN'), '@')[1]]",
@@ -95,6 +155,9 @@
         "devOpsName": "[concat('WVDQuickStartOrg', skip(parameters('utcValue'), 9))]",   
         "devOpsProjectName": "[concat('WVDQuickStartProj', skip(parameters('utcValue'), 9))]",
         "targetGroup": "WVDTestUsers",
+        "hpName": "[concat('hp',parameters('organizationNameCode'),parameters('departmentCode'))]",
+        "remoteAppGroup": "[concat('rag',variables('hpName'))]",
+        "desktopAppGroup": "[concat('dag',variables('hpName'))]",
         "automationVariables": [
             {
                 "name": "subscriptionid",
@@ -119,6 +182,42 @@
             {
                 "name": "orgName",
                 "value": "[concat('\"',variables('devOpsName'),'\"')]"
+            },
+            {
+                "name": "sessionHostSKU",
+                "value": "[concat('\"',parameters('vmSKU'),'\"')]"
+            },
+            {
+                "name": "numberofSH",
+                "value": "[concat('\"',parameters('numberOfSH'),'\"')]"
+            },
+            {
+                "name": "HostpoolName",
+                "value": "[concat('\"',variables('hpName'),'\"')]"
+            },
+            {
+                "name": "HostpoolType",
+                "value": "[concat('\"',parameters('hostpoolType'),'\"')]"
+            },
+            {
+                "name": "LoadBalancerType",
+                "value": "[concat('\"',parameters('loadBalance'),'\"')]"
+            },
+            {
+                "name": "RemoteAppGroupName",
+                "value": "[concat('\"',variables('remoteAppGroup'),'\"')]"
+            },
+            {
+                "name": "DesktopAppGroupName",
+                "value": "[concat('\"',variables('desktopAppGroup'),'\"')]"
+            },
+            {
+                "name": "AVDWorkspaceName",
+                "value": "[concat('\"',parameters('avdWS'),'\"')]"
+            },
+            {
+                "name": "AVDWorkspaceFriendlyName",
+                "value": "[concat('\"',parameters('avdWSFN'),'\"')]"
             },
             {
                 "name": "projectName",
