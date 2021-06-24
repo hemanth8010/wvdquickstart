@@ -14,7 +14,8 @@ stages:
     condition: and(succeeded(), true)
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -80,7 +81,8 @@ stages:
       )
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -143,7 +145,8 @@ stages:
     condition: and(succeeded(), true)
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -196,7 +199,8 @@ stages:
     condition: and(succeeded(), true)
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -237,7 +241,8 @@ stages:
     condition: and(succeeded(), true)
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -277,7 +282,8 @@ stages:
     condition: and(succeeded(), true)
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -376,7 +382,8 @@ stages:
     condition: and(succeeded(), true)
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -418,7 +425,8 @@ stages:
     condition: and(succeeded(), eq(variables['enableApplicationJob'], true))
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
@@ -459,7 +467,8 @@ stages:
     condition: and(succeeded(), eq(variables['enableApplicationJob'], true))
     timeoutInMinutes: 120
     pool:
-      vmImage: $(vmImage)
+      #vmImage: $(vmImage)
+      name: Default
     strategy:
         runOnce:
           deploy:
