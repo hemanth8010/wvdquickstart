@@ -58,7 +58,8 @@ function Invoke-GeneralDeployment {
       }
     }
 
-    $deploymentSchema = (Invoke-RestMethod -Uri $templateUri -Method 'GET').'$schema' # Works with PS7
+    #$deploymentSchema = (Invoke-RestMethod -Uri $templateUri -Method 'GET').'$schema' # Works with PS7
+    $deploymentSchema = 'https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#'
     Write-Verbose "Evaluating schema [$deploymentSchema]" -Verbose
     switch -regex ($deploymentSchema) {
       '\/deploymentTemplate.json#$' {
