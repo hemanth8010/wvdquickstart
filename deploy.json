@@ -97,8 +97,8 @@
                 "description": "Specify the type of hostpool. Pooled or Personal"
             },
             "allowedValues": [
-                "pooled",
-                "personal"
+                "Pooled",
+                "Personal"
             ]
         },
         "loadBalance": {
