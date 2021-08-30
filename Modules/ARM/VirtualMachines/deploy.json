@@ -522,14 +522,7 @@
                         "managedDisk": {
                             "storageAccountType": "Premium_LRS"
                         }
-                    },
-                    "dataDisks": [
-                        {
-                            "diskSizeGB": 1023,
-                            "lun": 0,
-                            "createOption": "Empty"
-                        }
-                    ]
+                    }
                 },                
                 "osProfile": {
                     "computerName": "[variables('vmNames')[copyIndex()]]",
