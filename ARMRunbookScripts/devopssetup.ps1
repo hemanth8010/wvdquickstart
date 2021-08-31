@@ -217,7 +217,9 @@ write-output $response
 
 $split = $DomainJoinAccountUPN.Split("@")
 $domainUsername = $split[0]
-$domainName = $split[1]
+#$domainName = $split[1]
+
+write-output $domainName
 
 # In case Azure AD DS is used, create a new user here, and assign it to the targetGroup. The principalID of this group will then be used.
 if ($identityApproach -eq 'Azure AD DS') {
@@ -345,7 +347,7 @@ $parameters = $parameters.Replace("[DesktopAppGroupName]", $DesktopAppGroupName)
 #$parameters = $parameters.Replace("[principalIds]", $principalIds)
 $parameters = $parameters.Replace("[AVDWorkspaceName]", $AVDWorkspaceName)
 $parameters = $parameters.Replace("[AVDWorkspaceFriendlyName]", $AVDWorkspaceFriendlyName)
-$parameters = $parameters.Replace("[numberofSH]", $numberofSH)
+$parameters = $parameters.Replace([numberofSH], $numberofSH)
 $parameters = $parameters.Replace("[identityApproach]", $identityApproach)
 $parameters = $parameters.Replace('"', "'")
 write-output $parameters

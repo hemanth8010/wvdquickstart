@@ -133,6 +133,12 @@
                 "description": "Specify the security Group to use for assigning access."
             }
         },
+        "domainName": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the domain name to join"
+            }
+        },
         "optionalNotificationEmail": {
             "type": "string",
             "metadata": {
@@ -152,7 +158,7 @@
         "_artifactsLocation": "https://raw.githubusercontent.com/hemanth8010/wvdquickstart/master",
         "AdminPasswordSecret": "adminPassword",
         "existingDomainUsername": "[first(split(parameters('DomainJoinAccountUPN'), '@'))]",
-        "existingDomainName": "[split(parameters('DomainJoinAccountUPN'), '@')[1]]",
+        "existingDomainName": "[parameters('domainName')]",
         "identityName": "[concat('WVDServicePrincipal',skip(parameters('utcValue'), 9))]",
         "location": "[resourcegroup().location]",
         "rgName": "[resourcegroup().name]",
@@ -667,7 +673,7 @@
                 {
                     "type": "Microsoft.Compute/virtualMachines/extensions",
                     "apiVersion": "2019-12-01",
-                    "name": "[concat(parameters('domainControllerVMName'),'/', 'userCreation')]",
+                    "name": "[concat(parameters('domainControllerVMName'),'/', 'azFiles')]",
                     "location": "[resourcegroup().location]",
                     "dependsOn": [
                     ],
@@ -678,9 +684,9 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(variables('_artifactsLocation'), '/Modules/ARM/UserCreation/scripts/createUsers.ps1')]"
+                                "[concat(variables('_artifactsLocation'), '/Uploads/WVDScripts/001-AzFiles/cse_run.ps1')]"
                             ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File createUsers.ps1 ', variables('existingDomainName'), ' ', parameters('targetGroup'), ' ', variables('_artifactsLocation'), ' ', variables('existingDomainUsername'), ' ', parameters('DomainJoinAccountPassword'), ' ', variables('devOpsName'))]"
+                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File cse_run.ps1 -AzureAdminUpn ' , variables('existingDomainUsername'), ' -AzureAdminPassword ', parameters('DomainJoinAccountPassword'), ' -domainJoinPassword ', parameters('DomainJoinAccountPassword'))]"
                         }
                     }
                 }
