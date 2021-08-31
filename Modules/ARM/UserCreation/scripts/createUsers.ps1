@@ -22,6 +22,12 @@ password of the domain join account. Not stored in any logs.
 .PARAMETER devOpsName
 Name of the DevOps organization to generate the test user password
 
+.PARAMETER resourceGroupName
+
+.PARAMETER vmName
+
+.PARAMETER extensionName
+
 #>
 
 [CmdletBinding(SupportsShouldProcess = $true)]
@@ -34,6 +40,9 @@ $artifactsLocation = $args[2]
 $domainUsername = $args[3]
 $domainPassword = $args[4]
 $devOpsName = $args[5]
+$resourcegroupName = $args[6]
+$vmName = $args[7]
+$extensionName = $args[8]
 #####################################
 
 ##########
@@ -235,3 +244,6 @@ foreach ($config in $UserConfig.userconfig) {
         Start-ADSyncSyncCycle -PolicyType Delta -Verbose
     }
 }
+
+LogInfo("## 5 - Removing Custom Script Extension")
+Remove-AzVMCustomScriptExtension -ResourceGroupName $resourcegroupName -VMName $vmName -Name $extensionName
