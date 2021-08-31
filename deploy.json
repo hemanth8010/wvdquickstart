@@ -658,7 +658,7 @@
             "dependsOn": [
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))]",
                 "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
-                "[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('domainControllerVMName'),'/', 'userCreation')]"
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('domainControllerVMName'), 'userCreation')]"
             ],
             "resourceGroup": "[parameters('dcRG')]",
             "subscriptionId": "[subscription().subscriptionId]",
