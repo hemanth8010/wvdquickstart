@@ -249,3 +249,4 @@ LogInfo("## 5 - Removing Custom Script Extension")
 
 Install-Module Az -Force -AllowClobber -Verbose
 Remove-AzVMCustomScriptExtension -ResourceGroupName $resourcegroupName -VMName $vmName -Name $extensionName
+Start-Sleep -Seconds 120
