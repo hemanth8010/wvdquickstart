@@ -323,8 +323,7 @@
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "reference(concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))).principalId",
-                "scope": "[subscription().Id]"
+                "principalId": "reference(concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))).principalId"
             }
         },     
         {
@@ -481,7 +480,7 @@
                         "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/runbooks/devOpsSetupRunbook')]",
                         "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
                         "[concat('microsoft.visualstudio/account/', variables('devOpsName'))]",
-                        "[concat('Microsoft.Resources/Deployments/userCreation')]",
+                        
                         "[concat('Microsoft.KeyVault/vaults/', variables('keyvaultName'))]"
                     ],
                     "tags": {
@@ -551,8 +550,7 @@
                 }
             },
             "dependsOn": [
-               "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
-               "[concat('Microsoft.Resources/Deployments/userCreation')]"
+               "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
             ],
             "resources": [
             ]
@@ -591,8 +589,8 @@
               "accountName": "[variables('devOpsName')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
-                "[concat('Microsoft.Resources/Deployments/userCreation')]"
+                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
+                
             ],
             "resources": []
         },
@@ -622,58 +620,15 @@
                 "retentionInterval": "P1D"
             }
         },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "userCreation",
-            "dependsOn": [
-                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))]",
-                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
-            ],
-            "resourceGroup": "[parameters('dcRG')]",
-            "subscriptionId": "[subscription().subscriptionId]",
-            "condition": "[equals(parameters('identityApproach'), 'AD')]",
-            "properties": {
-            "mode": "Incremental",
-            "template": {
-                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                "contentVersion": "1.0.0.0",
-                "parameters": {},
-                "variables": {},
-                "resources": [
-                {
-                    "type": "Microsoft.Compute/virtualMachines/extensions",
-                    "apiVersion": "2019-12-01",
-                    "name": "[concat(parameters('domainControllerVMName'),'/', 'userCreation')]",
-                    "location": "[resourcegroup().location]",
-                    "dependsOn": [
-                    ],
-                    "properties": {
-                        "publisher": "Microsoft.Compute",
-                        "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "1.7",
-                        "autoUpgradeMinorVersion": true,
-                        "settings": {
-                            "fileUris": [
-                                "[concat(variables('_artifactsLocation'), '/Modules/ARM/UserCreation/scripts/createUsers.ps1')]"
-                            ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File createUsers.ps1 ', variables('existingDomainName'), ' ', parameters('targetGroup'), ' ', variables('_artifactsLocation'), ' ', variables('existingDomainUsername'), ' ', parameters('DomainJoinAccountPassword'), ' ', variables('devOpsName'), ' ', parameters('dcRG'), ' ', parameters('domainControllerVMName'), ' ', concat(parameters('domainControllerVMName'),'/', 'userCreation'))]"
-                        }
-                    }
-                }
-                ]
-            },
-            "parameters": {}
-            }
-        },
+        
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
             "name": "azfiles",
             "dependsOn": [
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))]",
-                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
-                "[concat('Microsoft.Resources/deployments/', 'userCreation')]"
+                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
+                
             ],
             "resourceGroup": "[parameters('dcRG')]",
             "subscriptionId": "[subscription().subscriptionId]",
