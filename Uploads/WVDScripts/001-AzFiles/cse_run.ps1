@@ -133,7 +133,8 @@ LogInfo("###################")
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 #Fix for TLS
 
 $url = $($artifactsLocation + "/Uploads/WVDScripts/001-AzFiles/AzFiles.zip")
-Invoke-WebRequest -Uri $url -OutFile $PSScriptRoot+":\azfiles.zip"
+$file = Join-Path @PSScriptRoot "azfiles.zip"
+Invoke-WebRequest -Uri $url -OutFile $file
 
 $zipPackages = Get-ChildItem -Filter "*.zip" -Recurse | sort -Property BaseName
 if($zipPackages){
@@ -148,7 +149,7 @@ $i=0
 foreach ($zip in $zipPackages)
 {
     LogInfo "Unpacking $($zip.FullName)"
-    Expand-Archive -Path $zip.FullName -DestinationPath "_deploy\$(($i++).ToString("000"))-$($zip.BaseName)"
+    Expand-Archive -Path $zip.FullName -DestinationPath ".\$(($i++).ToString("000"))-$($zip.BaseName)"
 }
 
 $ConfigurationFilePath= Join-Path $PSScriptRoot $ConfigurationFileName
@@ -187,7 +188,7 @@ foreach ($config in $azfilesconfig.azfilesconfig) {
 
             $split = $config.domainName.Split(".")
             $username = $($config.domainName + "\" + $config.domainJoinUsername)
-            $scriptPath = $($PSScriptRoot + "\setup.ps1")
+            $scriptPath = $($PSScriptRoot + ".\azfile\setup.ps1")
             Set-Location $PSScriptRoot
 
             LogInfo("Using PSExec, set execution policy for the admin user")
