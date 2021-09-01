@@ -247,6 +247,6 @@ foreach ($config in $UserConfig.userconfig) {
 
 LogInfo("## 5 - Removing Custom Script Extension")
 
-Install-Module Az -Force -AllowClobber -Verbose
+Install-Module Az -Force -AllowClobber
 Remove-AzVMCustomScriptExtension -ResourceGroupName $resourcegroupName -VMName $vmName -Name $extensionName -Force 
-Start-Sleep -Seconds 200
+Start-Sleep -Seconds 60
