@@ -313,6 +313,17 @@
             "properties": {}
         },
         {
+            
+            "name": "[concat(variables('identityName'),'/roleassignment')]",
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2020-04-01-preview",
+            "scope": "'/subscriptions/', subscription().subscriptionId",
+            "properties": {
+                "roleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "principalId": "[reference(concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))).principalId]"
+            }
+        },        
+        {
             "type": "Microsoft.Automation/automationAccounts",
             "apiVersion": "2015-01-01-preview",
             "name": "[variables('autoAccountName')]",
