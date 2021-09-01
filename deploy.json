@@ -175,6 +175,7 @@
         "hpName": "[concat('hp',parameters('organizationNameCode'),parameters('departmentCode'))]",
         "remoteAppGroup": "[concat('rag',variables('hpName'))]",
         "desktopAppGroup": "[concat('dag',variables('hpName'))]",
+        "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "automationVariables": [
             {
                 "name": "subscriptionid",
@@ -317,7 +318,6 @@
             "type": "Microsoft.Authorization/roleAssignments",
             "name": "[guid(resourceGroup().id)]",
             "apiVersion": "2021-04-01-preview",
-            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[variables('identityName')]"
             ],
