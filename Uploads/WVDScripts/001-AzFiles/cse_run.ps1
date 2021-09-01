@@ -19,6 +19,9 @@ param (
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
     [string] $ConfigurationFileName = "azfiles.parameters.json"
+
+    [Parameter(Mandatory = $true)]
+    [string] $artifactsLocation
 )
 
 #####################################
@@ -133,7 +136,11 @@ LogInfo("###################")
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 #Fix for TLS
 
 $url = $($artifactsLocation + "/Uploads/WVDScripts/001-AzFiles/AzFiles.zip")
-$file = Join-Path @PSScriptRoot "azfiles.zip"
+$path = (Resolve-Path .\).path
+
+LogInfo "Path is $($path)"
+
+$file = Join-Path $path "azfiles.zip"
 Invoke-WebRequest -Uri $url -OutFile $file
 
 $zipPackages = Get-ChildItem -Filter "*.zip" -Recurse | sort -Property BaseName

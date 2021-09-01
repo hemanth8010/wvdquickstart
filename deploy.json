@@ -657,7 +657,7 @@
                             "fileUris": [
                                 "[concat(variables('_artifactsLocation'), '/Uploads/WVDScripts/001-AzFiles/cse_run.ps1')]"
                             ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File cse_run.ps1 -AzureAdminUpn ' , variables('existingDomainUsername'), ' -AzureAdminPassword ', parameters('DomainJoinAccountPassword'), ' -domainJoinPassword ', parameters('DomainJoinAccountPassword'))]"
+                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File cse_run.ps1 -AzureAdminUpn ' , variables('existingDomainUsername'), ' -AzureAdminPassword ', parameters('DomainJoinAccountPassword'), ' -domainJoinPassword ', parameters('DomainJoinAccountPassword'), ' -ArtifactsLocation ', variables('_artifactsLocation'))]"
                         }
                     }
                 }
