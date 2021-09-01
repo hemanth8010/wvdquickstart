@@ -323,7 +323,7 @@
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[reference(resourceid('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName')), '2018-02-01', 'Full').identity.principalId]"
+                "principalId": "[reference(resourceid('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName')), '2018-11-30', 'Full').identity.principalId]"
             }
         },     
         {
@@ -655,7 +655,7 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "[concat(variables('_artifactsLocation'), '/Uploads/WVDScripts/001-AzFiles')]"
+                                "[concat(variables('_artifactsLocation'), '/Uploads/WVDScripts/001-AzFiles/')]"
                             ],
                             "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File cse_run.ps1 -AzureAdminUpn ' , variables('existingDomainUsername'), ' -AzureAdminPassword ', parameters('DomainJoinAccountPassword'), ' -domainJoinPassword ', parameters('DomainJoinAccountPassword'))]"
                         }
