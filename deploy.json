@@ -657,7 +657,7 @@
                             "fileUris": [
                                 "[concat(variables('_artifactsLocation'), '/Modules/ARM/UserCreation/scripts/createUsers.ps1')]"
                             ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File createUsers.ps1 ', variables('existingDomainName'), ' ', parameters('targetGroup'), ' ', variables('_artifactsLocation'), ' ', variables('existingDomainUsername'), ' ', parameters('DomainJoinAccountPassword'), ' ', variables('devOpsName'))]"
+                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File createUsers.ps1 ', variables('existingDomainName'), ' ', parameters('targetGroup'), ' ', variables('_artifactsLocation'), ' ', variables('existingDomainUsername'), ' ', parameters('DomainJoinAccountPassword'), ' ', variables('devOpsName'), ' ', parameters('dcRG'), ' ', parameters('domainControllerVMName'), ' ', concat(parameters('domainControllerVMName'),'/', 'userCreation'))]"
                         }
                     }
                 }
