@@ -130,6 +130,27 @@ LogInfo("## 0 - LOAD DATA ##")
 LogInfo("###################")
 #$storageaccountkey = $DynParameters.storageaccountkey
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 #Fix for TLS
+
+$url = $($artifactsLocation + "/Uploads/WVDScripts/001-AzFiles/AzFiles.zip")
+Invoke-WebRequest -Uri $url -OutFile $PSScriptRoot+":\azfiles.zip"
+
+$zipPackages = Get-ChildItem -Filter "*.zip" -Recurse | sort -Property BaseName
+if($zipPackages){
+    LogInfo "Found $($zipPackages.count) zip packages"
+}
+else
+{
+    LogError "No zip files found in the directory"
+}
+
+$i=0
+foreach ($zip in $zipPackages)
+{
+    LogInfo "Unpacking $($zip.FullName)"
+    Expand-Archive -Path $zip.FullName -DestinationPath "_deploy\$(($i++).ToString("000"))-$($zip.BaseName)"
+}
+
 $ConfigurationFilePath= Join-Path $PSScriptRoot $ConfigurationFileName
 
 $ConfigurationJson = Get-Content -Path $ConfigurationFilePath -Raw -ErrorAction 'Stop'
