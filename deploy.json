@@ -323,7 +323,7 @@
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": [reference(resourceid('MMicrosoft.ManagedIdentity/userAssignedIdentities/', variables('identityName')), '2018-02-01', 'Full').identity.principalId]
+                "principalId": [reference(resourceid('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName')), '2018-02-01', 'Full').identity.principalId]
             }
         },     
         {
