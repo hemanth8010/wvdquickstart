@@ -323,7 +323,7 @@
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[reference(concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))).principalId]"
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName')), '2018-11-30').principalId]"
             }
         },     
         {
@@ -604,6 +604,12 @@
                 "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/runbooks/ServicePrincipalRunbook')]"
             ],
             "kind": "AzureCLI",
+            "identity": {
+                "type": "userAssigned",
+                "userAssignedIdentities": {
+                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))]": {}
+                }
+            },
             "properties": {
                 "forceUpdateTag": 1,
                 "azCliVersion": "2.0.80",
