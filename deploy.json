@@ -482,7 +482,7 @@
                         "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/runbooks/devOpsSetupRunbook')]",
                         "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
                         "[concat('microsoft.visualstudio/account/', variables('devOpsName'))]",
-                        
+                        "[concat('Microsoft.Resources/Deployments/userCreation')]",
                         "[concat('Microsoft.KeyVault/vaults/', variables('keyvaultName'))]"
                     ],
                     "tags": {
@@ -552,7 +552,8 @@
                 }
             },
             "dependsOn": [
-               "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
+               "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
+               "[concat('Microsoft.Resources/Deployments/userCreation')]"
             ],
             "resources": [
             ]
@@ -591,8 +592,8 @@
               "accountName": "[variables('devOpsName')]"
             },
             "dependsOn": [
-                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
-                
+                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]",
+                "[concat('Microsoft.Resources/Deployments/userCreation')]"
             ],
             "resources": []
         },
