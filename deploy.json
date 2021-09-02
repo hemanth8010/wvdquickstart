@@ -319,11 +319,12 @@
             "name": "[guid(resourceGroup().id)]",
             "apiVersion": "2021-04-01-preview",
             "dependsOn": [
-                "[variables('identityName')]"
+                "[variables('identityName')]",
+                "[concat('Microsoft.KeyVault/vaults/', variables('keyvaultName'))]"
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[reference(resourceid('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName')), '2018-11-30', 'Full').principalId]"
+                "principalId": "[reference(concat('Microsoft.KeyVault/vaults/', variables('keyvaultName')), '2017-03-30', 'Full').identity.principalId]"
             }
         },     
         {
@@ -618,52 +619,6 @@
                 "timeout": "PT30M",
                 "cleanupPreference": "OnSuccess",
                 "retentionInterval": "P1D"
-            }
-        },
-        
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "azfiles",
-            "dependsOn": [
-                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', variables('identityName'))]",
-                "[concat('Microsoft.Automation/automationAccounts/', variables('autoAccountName'), '/jobs/', variables('jobGuid0'))]"
-                
-            ],
-            "resourceGroup": "[parameters('dcRG')]",
-            "subscriptionId": "[subscription().subscriptionId]",
-            "condition": "[equals(parameters('identityApproach'), 'AD')]",
-            "properties": {
-            "mode": "Incremental",
-            "template": {
-                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-                "contentVersion": "1.0.0.0",
-                "parameters": {},
-                "variables": {},
-                "resources": [
-                {
-                    "type": "Microsoft.Compute/virtualMachines/extensions",
-                    "apiVersion": "2019-12-01",
-                    "name": "[concat(parameters('domainControllerVMName'),'/', 'azFiles')]",
-                    "location": "[resourcegroup().location]",
-                    "dependsOn": [
-                    ],
-                    "properties": {
-                        "publisher": "Microsoft.Compute",
-                        "type": "CustomScriptExtension",
-                        "typeHandlerVersion": "1.7",
-                        "autoUpgradeMinorVersion": true,
-                        "settings": {
-                            "fileUris": [
-                                "[concat(variables('_artifactsLocation'), '/Uploads/WVDScripts/001-AzFiles/cse_run.ps1')]"
-                            ],
-                            "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File cse_run.ps1 -AzureAdminUpn ' , variables('existingDomainUsername'), ' -AzureAdminPassword ', parameters('DomainJoinAccountPassword'), ' -domainJoinPassword ', parameters('DomainJoinAccountPassword'), ' -ArtifactsLocation ', variables('_artifactsLocation'))]"
-                        }
-                    }
-                }
-                ]
-            },
-            "parameters": {}
             }
         }
     ],
