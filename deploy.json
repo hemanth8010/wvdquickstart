@@ -716,7 +716,7 @@
                         }
                     }
                 ],
-                "devopsagentaccnet": "[parameters('devopsagentaccnet')]",
+                "enableAcceleratedNetworking": "[parameters('devopsagentaccnet')]",
                 "networkSecurityGroup": {}
             }
         },
