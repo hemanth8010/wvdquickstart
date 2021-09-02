@@ -319,12 +319,11 @@
             "name": "[guid(resourceGroup().id)]",
             "apiVersion": "2021-04-01-preview",
             "dependsOn": [
-                "[variables('identityName')]",
-                "[concat('Microsoft.KeyVault/vaults/', variables('keyvaultName'))]"
+                "[variables('identityName')]"
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[reference(concat('Microsoft.KeyVault/vaults/', variables('keyvaultName')), '2019-09-01', 'Full').identity.principalId]"
+                "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))).principalId]"
             }
         },     
         {
