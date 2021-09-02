@@ -146,6 +146,30 @@
             },
             "defaultValue": ""
         },
+        "devopsagentaccnet": {
+            "type": "bool"
+        },
+        "devopsagentpipname": {
+            "type": "string"
+        },
+        "devopsagentpiptype": {
+            "type": "string"
+        },
+        "devopsagentpipsku": {
+            "type": "string"
+        },
+        "devopsagentvmname": {
+            "type": "string"
+        },
+        "devopsagentvmsku": {
+            "type": "string"
+        },
+        "devopsagentadmin": {
+            "type": "string"
+        },
+        "devopsagentadminpwd": {
+            "type": "secureString"
+        },
         "utcValue": {
             "type": "string",
             "metadata": {
@@ -175,6 +199,8 @@
         "hpName": "[concat('hp',parameters('organizationNameCode'),parameters('departmentCode'))]",
         "remoteAppGroup": "[concat('rag',variables('hpName'))]",
         "desktopAppGroup": "[concat('dag',variables('hpName'))]",
+        "vnetId": "[parameters('existingVnetName')]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('existingSubnetName'))]",
         "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "automationVariables": [
             {
@@ -665,6 +691,95 @@
                 ]
             },
             "parameters": {}
+            }
+        },
+        {
+            "name": "[concat(parameters('devopsagentvmname'),'-nic')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('devopsagentpipname'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('devopsagentpipname'))]"
+                            }
+                        }
+                    }
+                ],
+                "devopsagentaccnet": "[parameters('devopsagentaccnet')]",
+                "networkSecurityGroup": {}
+            }
+        },
+        {
+            "name": "[parameters('devopsagentpipname')]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2019-02-01",
+            "location": "[variables('location')]",
+            "properties": {
+                "publicIpAllocationMethod": "[parameters('devopsagentpiptype')]"
+            },
+            "sku": {
+                "name": "[parameters('devopsagentpipsku')]"
+            },
+            "zones": []
+        },
+        {
+            "name": "[parameters('devopsagentvmname')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-03-01",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('devopsagentvmname'),'-nic'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('devopsagentvmsku')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2019-Datacenter",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('devopsagentvmname'),'-nic'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('devopsagentvmname')]",
+                    "devopsagentadmin": "[parameters('devopsagentadmin')]",
+                    "devopsagentadminpwd": "[parameters('devopsagentadminpwd')]",
+                    "windowsConfiguration": {
+                        "enableAutomaticUpdates": true,
+                        "provisionVmAgent": true
+                    }
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
             }
         }
     ],
