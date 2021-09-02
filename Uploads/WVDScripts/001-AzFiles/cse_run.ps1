@@ -158,7 +158,7 @@ $i=0
 foreach ($zip in $zipPackages)
 {
     LogInfo "Unpacking $($zip.FullName)"
-    Expand-Archive -Path $zip.FullName -DestinationPath ".\$(($i++).ToString("000"))-$($zip.BaseName)"
+    Expand-Archive -Path $zip.FullName -DestinationPath ".\$($zip.BaseName)"
 }
 
 $ConfigurationFilePath= Join-Path $PSScriptRoot $ConfigurationFileName

@@ -22,12 +22,6 @@ password of the domain join account. Not stored in any logs.
 .PARAMETER devOpsName
 Name of the DevOps organization to generate the test user password
 
-.PARAMETER resourceGroupName
-
-.PARAMETER vmName
-
-.PARAMETER extensionName
-
 #>
 
 [CmdletBinding(SupportsShouldProcess = $true)]
@@ -245,8 +239,3 @@ foreach ($config in $UserConfig.userconfig) {
     }
 }
 
-LogInfo("## 5 - Removing Custom Script Extension")
-
-Install-Module Az -Force -AllowClobber
-Remove-AzVMCustomScriptExtension -ResourceGroupName $resourcegroupName -VMName $vmName -Name $extensionName -Force 
-Start-Sleep -Seconds 60
