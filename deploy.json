@@ -324,7 +324,7 @@
             ],
             "properties": {
                 "roleDefinitionId": "[concat(subscription().Id, '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-                "principalId": "[reference(concat('Microsoft.KeyVault/vaults/', variables('keyvaultName')), '2017-03-30', 'Full').identity.principalId]"
+                "principalId": "[reference(concat('Microsoft.KeyVault/vaults/', variables('keyvaultName')), '2019-09-01', 'Full').identity.principalId]"
             }
         },     
         {
