@@ -760,7 +760,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('devopsagentvmname'),'-nic'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat('nic-',parameters('devopsagentvmname')))]"
                         }
                     ]
                 },
