@@ -56,14 +56,14 @@
             "metadata": {
                 "description": "Workspace Name for AVD"
             },
-            "defaultValue": ""
+            "defaultValue": "WSINVAISDEMO"
         },
         "avdWSFN": {
             "type": "string",
             "metadata": {
                 "description": "User Friendly Workspace Name for AVD"
             },
-            "defaultValue": "WSINVAISDEMO"
+            "defaultValue": "Inviso AIS AVD Demo"
         },
         "azureAdminUpn": {
             "type": "string",
@@ -95,7 +95,7 @@
             "metadata": {
                 "description": "Enter the required number of session hosts"
             },
-            "defaultValue": "1"
+            "defaultValue": 1
         },
         "hostpoolType": {
             "type": "string",
