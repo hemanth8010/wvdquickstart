@@ -766,8 +766,8 @@
                 },
                 "osProfile": {
                     "computerName": "[parameters('devopsagentvmname')]",
-                    "devopsagentadmin": "[parameters('devopsagentadmin')]",
-                    "devopsagentadminpwd": "[parameters('devopsagentadminpwd')]",
+                    "adminUsername": "[parameters('devopsagentadmin')]",
+                    "adminPassword": "[parameters('devopsagentadminpwd')]",
                     "windowsConfiguration": {
                         "enableAutomaticUpdates": true,
                         "provisionVmAgent": true
