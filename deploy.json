@@ -201,7 +201,7 @@
         "remoteAppGroup": "[concat('rag',variables('hpName'))]",
         "desktopAppGroup": "[concat('dag',variables('hpName'))]",
         "vnetId": "[parameters('existingVnetName')]",
-        "subnetRef": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/',variables('vnetId'),'/subnets/',parameters('existingsubnetName'))]",
+        "subnetRef": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',parameters('virtualNetworkResourceGroupName'),'/providers/Microsoft.Network/virtualNetworks/',variables('vnetId'),'/subnets/',parameters('existingsubnetName'))]",
         "Contributor": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "automationVariables": [
             {
