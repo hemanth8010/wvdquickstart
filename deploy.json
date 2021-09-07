@@ -6,46 +6,50 @@
             "type": "string",
             "metadata": {
                 "description": "The name of the virtual network the VMs will be connected to. For example, this could be 'adVnet'"
-            }
+            },
+            "defaultValue": "vnet-wvd"
         },
         "existingSubnetName": {
             "type": "string",
             "metadata": {
                 "description": "The subnet the VMs will be placed in. For example, this could be 'adSubnet', or 'default'"
-            }
+            },
+            "defaultValue": "snet-wvd"
         },
         "virtualNetworkResourceGroupName": {
             "type": "string",
             "metadata": {
                 "description": "The resource group containing the existing virtual network."
-            }
+            },
+            "defaultValue": "rg-wvd-shared_services-wus2"   
         },
         "dcRG": {
             "type": "string",
             "metadata": {
                 "description": "The resource group containing the existing domain controller."
-            }
+            },
+            "defaultValue": "RG-SHARED_SERVICES-WUS2"  
         },
         "domainControllerVMName": {
             "type": "string",
             "metadata": {
                 "description": "The name of the VM with the domain controller on it. Required only when using AD Identity Approach."
             },
-            "defaultValue": ""
+            "defaultValue": "INV-WVD-LABDC"
         },
         "organizationNameCode": {
             "type": "string",
             "metadata": {
                 "description": "The Short code for your organization. For Example, MS for Microsoft or INV for Inviso"
             },
-            "defaultValue": ""
+            "defaultValue": "INV"
         },
         "departmentCode": {
             "type": "string",
             "metadata": {
                 "description": "The Short code for your department. For Example, AIS, BI, MSG etc."
             },
-            "defaultValue": ""
+            "defaultValue": "AIS"
         },
         "avdWS": {
             "type": "string",
@@ -59,7 +63,7 @@
             "metadata": {
                 "description": "User Friendly Workspace Name for AVD"
             },
-            "defaultValue": ""
+            "defaultValue": "WSINVAISDEMO"
         },
         "azureAdminUpn": {
             "type": "string",
@@ -83,13 +87,15 @@
             "type": "string",
             "metadata": {
                 "description": "Enter the required SKU from here.. https://docs.microsoft.com/en-us/azure/virtual-machines/sizes"
-            }
+            },
+            "defaultValue": "Standard_D2as_v4"
         },
         "numberOfSH": {
             "type": "int",
             "metadata": {
                 "description": "Enter the required number of session hosts"
-            }
+            },
+            "defaultValue": "1"
         },
         "hostpoolType": {
             "type": "string",
@@ -99,7 +105,8 @@
             "allowedValues": [
                 "Pooled",
                 "Personal"
-            ]
+            ],
+            "defaultValue": "Pooled"
         },
         "loadBalance": {
             "type": "string",
@@ -109,7 +116,8 @@
             "allowedValues": [
                 "BreadthFirst",
                 "DepthFirst"
-            ]
+            ],
+            "defaultValue": "BreadthFirst"
         },
         "DomainJoinAccountPassword": {
             "type": "securestring",
@@ -125,19 +133,22 @@
             "allowedValues": [
                 "AD",
                 "Azure AD DS"
-            ]
+            ],
+            "defaultValue": "AD"
         },
         "targetGroup": {
             "type": "string",
             "metadata": {
                 "description": "Specify the security Group to use for assigning access."
-            }
+            },
+            "defaultValue": "WVDUsers"
         },
         "domainName": {
             "type": "string",
             "metadata": {
                 "description": "Specify the domain name to join"
-            }
+            },
+            "defaultValue": "inv-wvd-lab.local"
         },
         "optionalNotificationEmail": {
             "type": "string",
@@ -146,23 +157,13 @@
             },
             "defaultValue": ""
         },
-        "devopsagentaccnet": {
-            "type": "bool"
-        },
-        "devopsagentpipname": {
-            "type": "string"
-        },
-        "devopsagentpiptype": {
-            "type": "string"
-        },
-        "devopsagentpipsku": {
-            "type": "string"
-        },
         "devopsagentvmname": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "vmdevopsagent"
         },
         "devopsagentvmsku": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "Standard_D2as_v4"
         },
         "devopsagentadmin": {
             "type": "string"
@@ -694,12 +695,12 @@
             }
         },
         {
-            "name": "[concat(parameters('devopsagentvmname'),'-nic')]",
+            "name": "[concat('nic-',parameters('devopsagentvmname'))]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2018-10-01",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('devopsagentpipname'))]"
+                "[concat('Microsoft.Network/publicIpAddresses/', concat('pip-',parameters('devopsagentvmname')))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -711,27 +712,24 @@
                             },
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIpAddress": {
-                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('devopsagentpipname'))]"
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', concat('pip-',parameters('devopsagentvmname')))]"
                             }
                         }
                     }
-                ],
-                "enableAcceleratedNetworking": "[parameters('devopsagentaccnet')]",
-                "networkSecurityGroup": {}
+                ]
             }
         },
         {
-            "name": "[parameters('devopsagentpipname')]",
+            "name": "[concat('pip-',parameters('devopsagentvmname'))]",
             "type": "Microsoft.Network/publicIpAddresses",
             "apiVersion": "2019-02-01",
             "location": "[variables('location')]",
             "properties": {
-                "publicIpAllocationMethod": "[parameters('devopsagentpiptype')]"
+                "publicIpAllocationMethod": "Dynamic"
             },
             "sku": {
-                "name": "[parameters('devopsagentpipsku')]"
-            },
-            "zones": []
+                "name": "Basic"
+            }
         },
         {
             "name": "[parameters('devopsagentvmname')]",
@@ -739,7 +737,7 @@
             "apiVersion": "2021-03-01",
             "location": "[variables('location')]",
             "dependsOn": [
-                "[concat('Microsoft.Network/networkInterfaces/', concat(parameters('devopsagentvmname'),'-nic'))]"
+                "[concat('Microsoft.Network/networkInterfaces/', concat('nic-',parameters('devopsagentvmname')))]"
             ],
             "properties": {
                 "hardwareProfile": {
