@@ -347,7 +347,7 @@ $parameters = $parameters.Replace("[DesktopAppGroupName]", $DesktopAppGroupName)
 #$parameters = $parameters.Replace("[principalIds]", $principalIds)
 $parameters = $parameters.Replace("[AVDWorkspaceName]", $AVDWorkspaceName)
 $parameters = $parameters.Replace("[AVDWorkspaceFriendlyName]", $AVDWorkspaceFriendlyName)
-$parameters = $parameters.Replace([numberofSH], $numberofSH)
+$parameters = $parameters.Replace("[numberofSH]", $numberofSH)
 $parameters = $parameters.Replace("[identityApproach]", $identityApproach)
 $parameters = $parameters.Replace('"', "'")
 write-output $parameters
