@@ -18,10 +18,7 @@ param (
     
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
-    [string] $ConfigurationFileName = "azfiles.parameters.json",
-
-    [Parameter(Mandatory = $true)]
-    [string] $artifactsLocation
+    [string] $ConfigurationFileName = "azfiles.parameters.json"
 )
 
 #####################################
@@ -133,34 +130,6 @@ LogInfo("## 0 - LOAD DATA ##")
 LogInfo("###################")
 #$storageaccountkey = $DynParameters.storageaccountkey
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 #Fix for TLS
-
-$url = $($artifactsLocation + "/Uploads/WVDScripts/001-AzFiles/AzFiles.zip")
-$path = $PSScriptRoot
-
-LogInfo "Path is $($path)"
-$filename = "azfiles.zip"
-$file = Join-Path $path $filename
-
-LogInfo "file is $($file)"
-Invoke-WebRequest -Uri $url -OutFile $file
-
-$zipPackages = Get-ChildItem -Filter "*.zip" -Recurse | sort -Property BaseName
-if($zipPackages){
-    LogInfo "Found $($zipPackages.count) zip packages"
-}
-else
-{
-    LogError "No zip files found in the directory"
-}
-
-$i=0
-foreach ($zip in $zipPackages)
-{
-    LogInfo "Unpacking $($zip.FullName)"
-    Expand-Archive -Path $zip.FullName -DestinationPath ".\$($zip.BaseName)"
-}
-
 $ConfigurationFilePath= Join-Path $PSScriptRoot $ConfigurationFileName
 
 $ConfigurationJson = Get-Content -Path $ConfigurationFilePath -Raw -ErrorAction 'Stop'
@@ -196,8 +165,8 @@ foreach ($config in $azfilesconfig.azfilesconfig) {
             # Run Get-Help Join-AzStorageAccountForAuth for more details on this cmdlet.
 
             $split = $config.domainName.Split(".")
-            $username = $($config.domainName + "\" + $config.domainJoinUsername)
-            $scriptPath = $($PSScriptRoot + ".\azfile\setup.ps1")
+            $username = $($split[0] + "\" + $config.domainJoinUsername)
+            $scriptPath = $($PSScriptRoot + "\setup.ps1")
             Set-Location $PSScriptRoot
 
             LogInfo("Using PSExec, set execution policy for the admin user")
