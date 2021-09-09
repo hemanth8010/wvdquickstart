@@ -45,6 +45,8 @@ Set-Location $PSScriptroot
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name PowershellGet -MinimumVersion 2.2.4.1 -Force
 
+Get-WindowsCapability -Name RSAT.activedirectory* -Online | Add-WindowsCapability –Online
+
 Install-Module -Name Az -Force -Verbose
 
 Import-Module -Name AzFilesHybrid -Force -Verbose
