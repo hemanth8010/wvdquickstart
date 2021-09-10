@@ -20,6 +20,10 @@ param (
     [string] $domainName,
 
     [Parameter(Mandatory = $false)]
+    [string] $ouPath,
+
+
+    [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
     [string] $ConfigurationFileName = "azfiles.parameters.json"
 )
