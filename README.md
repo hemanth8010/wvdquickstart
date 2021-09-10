@@ -9,13 +9,16 @@ By clicking the "Deploy to Azure" button, you will be taken to the Azure Portal 
 </a><br>
 
 
-Once the deployment completes, please navigate to https://dev.azure.com, where you will find the WVD QuickStart project. Navigate to the "pipelines" section - Here you'll find a running pipeline that deploys a WVD environment (VMs, host pool, desktop app group, FSLogix configuration) for you. Upon completion of this pipeline, which will take about 15 minutes, your WVD environment is ready for use!
+Once the initial deployment is complete, the admins should login to the devops agent VM deployed and setup the agent to run pipelines. This is a required step since Microsoft has recently added an additional step to get free devops grants. Follow the instructions here https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops to setup your agent.
 
-The QuickStart creates a test user for you to try out the environment. Navigate to https://rdweb.wvd.microsoft.com/arm/webclient/index.html and login with the following test user credentials:
+Once the setup is complete, open PowerShell as administrator and install AZ module.
 
-Username: WVDTestUser001@{your-domain}.com <br>
-Password: Taken from DevOps organization in the following way: If organization is called "WVDQuickStartOrg120011Z", your password will be "Org120011Z!" (case sensitive, and don't forget the exclamation point at the end) 
-(Disclaimer: You should change this password at your earliest convenience.)
+Install-Module Az -Force -AllowClobber
+
+At this point, you are ready to create and run a pipeline. Navigate back to the DevOps project and create a pipeline.
+
+
+(Disclaimer: No warranties. Use as-is at your own risk)
 
 
 

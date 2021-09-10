@@ -16,9 +16,6 @@ param (
     [string] $domainName,
 
     [Parameter(Mandatory = $false)]
-    [string] $ouPath,
-    
-    [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
     [string] $ExecutableName = "Teams_windows_x64.msi"
 

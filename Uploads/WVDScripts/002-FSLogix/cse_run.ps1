@@ -18,9 +18,6 @@ param (
 
     [Parameter(Mandatory = $true)]
     [string] $domainName,
-    
-    [Parameter(Mandatory = $false)]
-    [string] $ouPath,
 
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]

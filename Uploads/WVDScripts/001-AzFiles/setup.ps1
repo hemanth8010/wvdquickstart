@@ -80,4 +80,4 @@ Connect-AzAccount -Credential $Credential
 $context = Get-AzContext
 Select-AzSubscription -SubscriptionId $context.Subscription.Id
 
-Join-AzStorageAccountForAuth -ResourceGroupName $RG -StorageAccountName $S -DomainAccountType 'ComputerAccount' -OrganizationalUnitName $OU -OverwriteExistingADObject
+Join-AzStorageAccountForAuth -ResourceGroupName $RG -StorageAccountName $S -DomainAccountType 'ComputerAccount' -OverwriteExistingADObject
