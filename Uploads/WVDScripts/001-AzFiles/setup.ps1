@@ -16,6 +16,9 @@ Azure admin UPN
 .PARAMETER P
 Azure admin password
 
+.PARAMETER D
+Azure admin password
+
 #>
 
 param(    
@@ -31,7 +34,13 @@ param(
     [string] $U,
 
     [Parameter(Mandatory = $true)]
-    [string] $P
+    [string] $P,
+
+    [Parameter(Mandatory = $true)]
+    [string] $D
+
+    [Parameter(Mandatory = $true)]
+    [string] $OU
 
 )
 
@@ -45,7 +54,8 @@ Set-Location $PSScriptroot
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name PowershellGet -MinimumVersion 2.2.4.1 -Force
 
-Get-WindowsCapability -Name RSAT.activedirectory* -Online | Add-WindowsCapability –Online
+#$rsat = Get-WindowsCapability -Name RSAT.activedirectory* -Online
+#Add-WindowsCapability -Name $rsat.Name -Online
 
 Install-Module -Name Az -Force -Verbose
 
@@ -53,8 +63,8 @@ Import-Module -Name AzFilesHybrid -Force -Verbose
 Import-Module -Name activedirectory -Force -Verbose
 
 # Find existing OU or create new one. Get path for OU from domain by splitting the domain name, to format DC=fabrikam,DC=com
-$domain = $U.split('@')[1]
-$DC = $domain.split('.')
+<#$domain = $U.split('@')[1]
+$DC = $D.split('.')
 foreach($name in $DC) {
     $path = $path + ',DC=' + $name
 }
@@ -62,7 +72,7 @@ $path = $path.substring(1)
 $ou = Get-ADOrganizationalUnit -Filter 'Name -like "Profiles Storage"'
 if ($ou -eq $null) {
     New-ADOrganizationalUnit -name 'Profiles Storage' -path $path
-}
+}#>
 
 # Connect to Azure
 $Credential = New-Object System.Management.Automation.PsCredential($U, (ConvertTo-SecureString $P -AsPlainText -Force))
@@ -70,4 +80,4 @@ Connect-AzAccount -Credential $Credential
 $context = Get-AzContext
 Select-AzSubscription -SubscriptionId $context.Subscription.Id
 
-Join-AzStorageAccountForAuth -ResourceGroupName $RG -StorageAccountName $S -DomainAccountType 'ComputerAccount' -OrganizationalUnitName 'Profiles Storage' -OverwriteExistingADObject
+Join-AzStorageAccountForAuth -ResourceGroupName $RG -StorageAccountName $S -DomainAccountType 'ComputerAccount' -OrganizationalUnitName $OU -OverwriteExistingADObject

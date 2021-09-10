@@ -11,6 +11,9 @@ param (
 
     [Parameter(Mandatory = $false)]
     [string] $domainJoinPassword,
+
+    [Parameter(Mandatory = $true)]
+    [string] $domainName,
     
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]

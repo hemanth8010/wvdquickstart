@@ -37,6 +37,9 @@ variables:
 - name: domainJoinUserName
   value: "[adminUsername]"
 
+- name: ouPath
+  value: "[ouPath]"
+
 ### Storage Account ###
 - name: wvdAssetsStorage
   value: "[wvdAssetsStorage]"

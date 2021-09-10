@@ -39,6 +39,7 @@
     vmDiskType                            = "Premium_LRS"                       # SKU of the above disk
     domainJoinUser                        = "[DomainJoinAccountUPN]"            # The domain join account UPN
     domainName                            = "[existingDomainName]"              # domain for the VMs to join, taken from domainJoinUser
+    ouPath                                = "[ouPath]"                          # OUPath for VMs to join
     adminUsername                         = "[existingDomainUsername]"          # domain controller admin username, taken from domainJoinUser
     computerName                          = "[computerName]"                    # The name of the VM with the domain controller on it. Required only when using AD Identity Approach.
     vnetName                              = "[existingVnetName]"                # Name of the virtual network with the domain controller

@@ -64,7 +64,7 @@
             }
         },
         "domainJoinOU": {
-            "value": ""
+            "value": "[ouPath]"
         },
         "dscConfiguration": {
             "value": {

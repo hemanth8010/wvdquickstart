@@ -25,6 +25,7 @@ $projectName = Get-AutomationVariable -Name 'projectName'
 $location = Get-AutomationVariable -Name 'location'
 $adminUsername = Get-AutomationVariable -Name 'adminUsername'
 $domainName = Get-AutomationVariable -Name 'domainName'
+$ouPath = Get-AutomationVariable -Name 'ouPath'
 $keyvaultName = Get-AutomationVariable -Name 'keyvaultName'
 $wvdAssetsStorage = Get-AutomationVariable -Name 'assetsName'
 $profilesStorageAccountName = Get-AutomationVariable -Name 'profilesName'
@@ -303,6 +304,7 @@ $content = (New-Object System.Net.WebClient).DownloadString($downloadUrl)
 $content = $content.Replace("[location]", $location)
 $content = $content.Replace("[adminUsername]", $adminUsername)
 $content = $content.Replace("[domainName]", $domainName)
+$content = $content.Replace("[ouPath]", $ouPath)
 $content = $content.Replace("[keyVaultName]", $keyvaultName)
 $content = $content.Replace("[wvdAssetsStorage]", $wvdAssetsStorage)
 $content = $content.Replace("[resourceGroupName]", $ResourceGroupName)
@@ -331,6 +333,7 @@ $parameters = $parameters.Replace("[subscriptionId]", $subscriptionId)
 $parameters = $parameters.Replace("[location]", $location)
 $parameters = $parameters.Replace("[adminUsername]", $adminUsername)
 $parameters = $parameters.Replace("[domainName]", $domainName)
+$parameters = $parameters.Replace("[ouPath]", $ouPath)
 $parameters = $parameters.Replace("[keyVaultName]", $keyvaultName)
 $parameters = $parameters.Replace("[assetsName]", $wvdAssetsStorage)
 $parameters = $parameters.Replace("[profilesName]", $profilesStorageAccountName)
@@ -447,6 +450,9 @@ $body = @"
     "domainJoinPassword": {
       "value": "$($DomainUnsecurePassword)",
       "isSecret": true
+    },
+    "domainName": {
+      "value": "$($DomainName)"
     }
   },
   "type": "Vsts",

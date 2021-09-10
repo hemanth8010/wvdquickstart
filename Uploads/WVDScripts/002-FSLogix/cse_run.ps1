@@ -15,7 +15,13 @@ param (
 
     [Parameter(Mandatory = $false)]
     [string] $domainJoinPassword,
+
+    [Parameter(Mandatory = $true)]
+    [string] $domainName,
     
+    [Parameter(Mandatory = $false)]
+    [string] $ouPath,
+
     [Parameter(Mandatory = $false)]
     [ValidateNotNullOrEmpty()]
     #[string] $ConfigurationFilePath = (Join-Path $PSScriptRoot "fslogix.parameters.json")

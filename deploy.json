@@ -150,6 +150,13 @@
             },
             "defaultValue": "inv-wvd-lab.local"
         },
+        "OUPath": {
+            "type": "string",
+            "metadata": {
+                "description": "Specify the OU Path."
+            },
+            "defaultValue": "WVDUsers"
+        },
         "optionalNotificationEmail": {
             "type": "string",
             "metadata": {
@@ -276,9 +283,13 @@
                 "name": "adminUsername",
                 "value": "[concat('\"',variables('existingDomainUsername'),'\"')]"
             },
-                        {
+            {
                 "name": "domainName",
                 "value": "[concat('\"',variables('existingDomainName'),'\"')]"
+            },
+            {
+                "name": "ouPath",
+                "value": "[concat('\"',parameters('OUPath'),'\"')]"
             },
             {
                 "name": "keyvaultName",

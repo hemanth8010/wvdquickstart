@@ -1,9 +1,9 @@
 {
     "userconfig": [
         {
-            "createUser": true,
-            "createGroup": true,
-            "assignUsers": true,
+            "createUser": false,
+            "createGroup": false,
+            "assignUsers": false,
             "syncAD": true,
             "userName": "WVDTestUser001"
         }
