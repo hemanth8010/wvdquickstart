@@ -39,9 +39,6 @@ param(
     [Parameter(Mandatory = $true)]
     [string] $D
 
-    [Parameter(Mandatory = $true)]
-    [string] $OU
-
 )
 
 # Set execution policy    
