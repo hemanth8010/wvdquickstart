@@ -199,6 +199,8 @@ LogInfo('########################')
 LogInfo('Cleanup domain name')
 $domain = $domain.Replace('.onmicrosoft.com', '')
 
+$domain = $domain.Split('.')[0]
+
 # Assign permissions
 $command = "icacls {0}: /grant ('{1}\{2}:(M)'); icacls {0}: /grant ('Creator Owner:(OI)(CI)(IO)(M)'); icacls {0}: /remove ('Authenticated Users'); icacls {0}: /remove ('Builtin\Users')" -f $driveLetter, $domain, $targetGroup
 LogInfo("Run ACL command: '$command'")
