@@ -13,7 +13,33 @@
                     "Name": "VHDLocations",
                     "Type": "MultiString",
                     "Value": "\\\\[profilesStorageAccountName].file.core.windows.net\\[profilesShareName]"
+                },
+                {
+                    "Name": "DeleteLocalProfileWhenVHDShouldApply",
+                    "Type": "DWORD",
+                    "Value": "1"
+                },
+                {
+                    "Name": "FlipFlopProfileDirectoryName",
+                    "Type": "DWORD",
+                    "Value": "1"
+                },
+                {
+                    "Name": "IsDynamic",
+                    "Type": "DWORD",
+                    "Value": "1"
+                },
+                {
+                    "Name": "SizeInMBs",
+                    "Type": "DWORD",
+                    "Value": "30720"
+                },
+                {
+                    "Name": "VolumeType",
+                    "Type": "String",
+                    "Value": "vhdx"
                 }
+
             ],
             "NTFSPermission": true,
             "fileShareName": "[profilesShareName]",
