@@ -51,8 +51,8 @@ Set-Location $PSScriptroot
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Install-Module -Name PowershellGet -MinimumVersion 2.2.4.1 -Force
 
-#$rsat = Get-WindowsCapability -Name RSAT.activedirectory* -Online
-#Add-WindowsCapability -Name $rsat.Name -Online
+$rsat = Get-WindowsCapability -Name RSAT.activedirectory* -Online
+Add-WindowsCapability -Name $rsat.Name -Online
 
 Install-Module -Name Az -Force -Verbose
 
@@ -78,3 +78,5 @@ $context = Get-AzContext
 Select-AzSubscription -SubscriptionId $context.Subscription.Id
 
 Join-AzStorageAccountForAuth -ResourceGroupName $RG -StorageAccountName $S -DomainAccountType 'ComputerAccount' -OverwriteExistingADObject
+
+Remove-WindowsCapability -Name $rsat.Name -Online

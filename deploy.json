@@ -155,7 +155,7 @@
             "metadata": {
                 "description": "Specify the OU Path."
             },
-            "defaultValue": "WVDUsers"
+            "defaultValue": ""
         },
         "optionalNotificationEmail": {
             "type": "string",
