@@ -83,7 +83,7 @@
                 "description": "User or service account UPN (<username>@<domain-to-join>.com) with sufficient privileges to domain join virtual machines. Additionally, please make sure the username is allowed (aka.ms/usernames) - Certain common usernames such as 'admin' are not allowed for this account. The template will fail if you enter a user account that requires MFA or an application that is secured by a certificate."
             }
         },
-        "vmSKU": {
+        "vmsku": {
             "type": "string",
             "metadata": {
                 "description": "Enter the required SKU from here.. https://docs.microsoft.com/en-us/azure/virtual-machines/sizes"
@@ -136,7 +136,7 @@
             ],
             "defaultValue": "AD"
         },
-        "targetGroup": {
+        "targetgroup": {
             "type": "string",
             "metadata": {
                 "description": "Specify the security Group to use for assigning access."
